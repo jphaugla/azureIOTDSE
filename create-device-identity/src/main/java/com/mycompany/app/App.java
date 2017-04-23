@@ -6,12 +6,9 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 
-/**
- * Hello world!
- *
- */
-public class App 
+public class App
 {
+/*    change this connectionString for your IOTHub */
     private static final String connectionString = "HostName=JPHxxxxxxxxxxxx.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=xxxxxxxxxxxxxxxxxx=";
     private static final String deviceId = "myFirstJavaDevice";
     public static void main( String[] args ) throws IOException, URISyntaxException, Exception
