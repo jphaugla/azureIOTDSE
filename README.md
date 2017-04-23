@@ -1,5 +1,4 @@
 #Read-D2C-DSE
-
 ========================
 See here for use case and requirements 
 [git@github.com:jphaugla/azureIOTDSE.git]()
