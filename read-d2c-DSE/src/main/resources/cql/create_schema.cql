@@ -8,5 +8,5 @@ create table if not exists windspeed(
         transaction_time timestamp,
         transaction_day int,
         windSpeed double,
-        PRIMARY KEY ((deviceID), transaction_time)
+        PRIMARY KEY ((deviceID,transaction_day), transaction_time)
 ) WITH CLUSTERING ORDER BY (transaction_time desc);
