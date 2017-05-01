@@ -1,0 +1,54 @@
+package com.datastax.spark.eventhub
+
+import org.apache.spark.SparkContext
+import org.apache.spark.streaming.eventhubs.EventHubsUtils
+import org.apache.spark.streaming.{Seconds, StreamingContext}
+
+/**
+ * an example application of Streaming WordCount
+ */
+object StreamingWordCount {
+
+  def main(args: Array[String]): Unit = {
+
+    if (args.length != 6) {
+      println("Usage: program progressDir PolicyName PolicyKey EventHubNamespace EventHubName" +
+        " BatchDuration(seconds)")
+      sys.exit(1)
+    }
+
+    val progressDir = args(0)
+    val policyName = args(1)
+    val policykey = args(2)
+    val eventHubNamespace = args(3)
+    val eventHubName = args(4)
+    val batchDuration = args(5).toInt
+
+    val eventhubParameters = Map[String, String] (
+      "eventhubs.policyname" -> policyName,
+      "eventhubs.policykey" -> policykey,
+      "eventhubs.namespace" -> eventHubNamespace,
+      "eventhubs.name" -> eventHubName,
+      "eventhubs.partition.count" -> "4",
+      "eventhubs.consumergroup" -> "$Default"
+    )
+
+    val ssc = new StreamingContext(new SparkContext(), Seconds(batchDuration))
+    System.out.println(s"after ssc creation with progressDir $progressDir policy name $policyName policykey " +
+      s"$policykey namespace $eventHubNamespace name $eventHubName batch $batchDuration")
+    val inputDirectStream = EventHubsUtils.createDirectStreams(
+      ssc,
+      eventHubNamespace,
+      progressDir,
+      Map(eventHubName -> eventhubParameters))
+    System.out.println(s"before for loop")
+    inputDirectStream.foreachRDD { rdd =>
+      rdd.flatMap(eventData => new String(eventData.getBody).split(" ").map(_.replaceAll(
+        "[^A-Za-z0-9 ]", ""))).map(word => (word, 1)).reduceByKey(_ + _).collect().toList.
+        foreach(println)
+    }
+
+    ssc.start()
+    ssc.awaitTermination()
+  }
+}

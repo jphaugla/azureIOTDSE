@@ -1,0 +1,1 @@
+dse spark-submit --class com.datastax.spark.eventhub.EventhubDataStaxStream target/spark-streaming-eventhubs_examples_2.11-2.1.0-SNAPSHOT.jar  "/tmp" "iothubowner" "+gEL7bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxC9r=" "iothub-ns-jphhoneyio-1xxxxxxxxxxxx" "jphhoneyiot" "1"
