@@ -7,7 +7,9 @@ A company wants to use Microsoft Azure IOT Hub to manage devices collecting wind
 
 In order to run this demo, you need an IOT hub created.
 
-##  Azure IOT Hub
+This github demonstrates two ways to recieve messages from Azure Eventhub and write to DataStax Cassandra.  The first way uses the datastax java driver to write asynchronously to DataStax.  The second example uses spark streaming with the Cassandra Connector to write to DataStax Cassandra from the Azure EventHub
+
+##Azure IOT Hub using aysynchronous writes with DataStax java drivers
 The code here was written using the steps from this Microsoft Azure link:
 
 [https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-java-java-getstarted ]()
@@ -31,11 +33,11 @@ From these sections:
 
 The trickiest part to using the IOT hub is understanding which connection information is needed in each case and not making any typos in the various names and keys comprising the keynames.   
 
-# Running demo
+#Running java demo
 
 Must have maven installed 
 
-## Download the source from GitHub.
+##Download the source from GitHub.
 
   * Navigate to the directory where you would like to save the code.
   * Execute the following command:
@@ -94,12 +96,15 @@ cd simulateddevice
 
 node SimulatedDevice.js
 
+#Streaming version of code using Spark Streaming from Azure Eventhub 
+
+instead of receiving the messages using read-d2c-DSE directory, use streamReadIOT
+
+cd streamReadIOT
+
+mvn clean package -DskipTests
+
+./runit.sh
 
 
-
-
-
-
-
-
-
+start simulated device as before
