@@ -99,6 +99,8 @@ node SimulatedDevice.js
 #Streaming version of code using Spark Streaming from Azure Eventhub 
 
 instead of receiving the messages using read-d2c-DSE directory, use streamReadIOT
+built off this github https://github.com/hdinsight/spark-eventhubs
+
 
 cd streamReadIOT
 
